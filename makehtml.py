@@ -155,14 +155,27 @@ with codecs.open("slides.html","a","utf-8") as g:
       if not inul:
         inul=True
         g.write('<ul class="description">\n')
-      g.write('<li>'+getText(line[2:].strip())+'</li>\n')
-
-    # quotes: support both ``` and ..QUOTE
-    elif line.startswith('..QUOTE') or line.startswith('```'):
+      txti=2
+      pref=""
+      if not line[1]==' ':
+        txti=3
+        pref=' style="text-indent:'+line[1]+'cm"'
+      g.write('<li'+pref+'>'+getText(line[txti:].strip())+'</li>\n')
+    elif line.startswith('..QUOTE'):
       if not inquote: g.write('<pre>')
       else: g.write('</pre>')
       inquote=not inquote
-
+    elif line.startswith('..INDENT'):
+      idt=line[8]
+      g.write('<div syle="text-indent: '+idt+'cm">' + line[10:]+'</div>')
+    elif line.startswith('..HIDE'):
+      step=line[6]
+      nsteps=line[8]
+      if step=='1': g.write('<span data-step-count='+nsteps+'></span>')
+      g.write('<div class="animate-show-visibility" data-step='+step+'>')
+    elif line.startswith('..ENDHIDE'):
+      g.write('</div>')
+ 
     # the Markdown way for images ![](img.jpg) is not enough: we require an additional mandatory parameter: the height %
     elif line.startswith('..IMG'):
       h=line[5:7]

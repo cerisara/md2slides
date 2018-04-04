@@ -37,6 +37,11 @@ Non-markdown syntax:
 - text in col2
 ..ENDCOL
 ```
+- List items may be indented using a number (of cm):
+```
+- base indentation
+-2 indented 2 cms
+```
 - If you find that the font size is too small or too large, remember that this is all HTML, so you can at any time press Ctrl+ or Ctrl- in the browser !
 
 ## Example
