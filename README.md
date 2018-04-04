@@ -41,5 +41,5 @@ Non-markdown syntax:
 
 ## Example
 
-The given example compiles into the following [presentation](slides.html)
+The given example compiles into the following [presentation](http://deeploria.gforge.inria.fr/pres/md2slides/slides.html)
 
