@@ -1,5 +1,8 @@
-..TITLE1 Deep generative networks
-..TITLE3 Christophe Cerisara
+..TITLE2 Basic text generative models
+<br>
+<br>
+<br>
+..TITLE4 Christophe Cerisara
 
 ---
 
@@ -50,117 +53,20 @@ $$P(W) = \prod_t P(w_{t}|w_{t-d,\cdots,t-1})$$
 
 ..TITLE4 Feedforward to generate next word
 
-..IMG60 ffvin.png
+..IMG60 https://www.researchgate.net/profile/Hamid_Hosseini12/publication/287209604/figure/fig4/AS:307959503572995@1450434675333/Multilayer-perceptron-neural-network-model-1-5-8-7-7-4.png
 
 - Feedforward models are not robust to insertions/deletions: "Le vin peut aussi être fait à partir de"
 
 ---
 
-..TITLE4 AutoEncoder : generating self
+#### Use standard markdown for headers
 
-..IMG50 ae.png
+..COL
 
-g() = generator
+- Easy to add image on the right
+- Don't forget to type Crtl+ or Ctrl- to increase/decrease font size
 
----
-
-..TITLE4 Recurrent Neural Network Language Model (RNNLM)
-
-..IMG50 rnnlm.png
-
-- Memory-vector stores important words step by step
-- Fewer parameters to train
-
----
-
-..TITLE4 Greedy Generation
-
-- Generate the next word
-- slide the input window and add the generated word at the end
-- Iterate
-
---
-
-- Not globally optimal (past decisions can not be changed)
-
----
-
-..TITLE4 Viterbi: global optimum
-
-..IMG60 viterbi.jpg
-
-$$\max_{\phi} \prod_t P(w_t|w_{t-d},\cdots,w_t)$$
-
----
-
-..TITLE4 Intermediate algorithms
-
-- Beam search: Keep N best hypothesis at each step
-- A star: Estimate the score until the end, at each step
-
---
-
-In practice: Greedy works well with RNN !
-
----
-
-..TITLE4 Character-LSTM
-
-- Andrej Karpathy https://karpathy.github.io/2015/05/21/rnn-effectiveness/
-- Train on Shakespeare (4.4MB) 3 jours (GPU), 1 mois (CPU)
-
-..QUOTE
-PANDARUS:
-Alas, I think he shall be come approached and the day
-When little srain would be attain'd into being never fed,
-And who is but a chain and subjects of his death,
-I should not sleep.
-
-Second Senator:
-They are away this miseries, produced upon my soul,
-Breaking and strongly should be buried, when I perish
-The earth and thoughts of many states.
-..QUOTE
-
----
-
-..TITLE4 seq2seq: generating sequences
-
-..IMG50 seq2seq.png
-
-De facto standard for translation, summarization...
-
----
-
-..TITLE4 Variational Auto-Encoder: variability in generation
-
-..IMG40 ae.png
-
-Z is a latent variable:
-$$Z \sim N(\mu,\sigma)$$
-
----
-
-..TITLE4 Variational Auto-Encoder: variability in generation
-
-..COL ENCODER
-- Transforms input into a Gaussian
-- Before generation, we sample a point from this Gaussian
-
-..COL DECODER
-- Standard: generates from a point
-- Must have high capacity to map a Gaussian into any possible distribution
+..COL
+..IMG50 https://www.nobelprize.org/nobel_prizes/physics/laureates/1921/einstein.jpg
 ..ENDCOL
-
----
-
-..TITLE4 Variational Auto-Encoder: Differentiable ?
-
-..IMG70 vae.png
-
----
-
-..TITLE4 Generative Adversarial Networks
-
-..IMG80 gan.jpg
 

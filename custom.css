@@ -1,0 +1,71 @@
+.animate-show {
+display: none !important;
+}
+.animate-show.animated {
+display: inherit !important;
+}
+
+.animate-show-visibility {
+opacity: 0 !important;
+visibility: hidden;
+}
+.animate-show-visibility.animated {
+opacity: 1 !important;
+visibility: visible;
+}
+
+.animate-hide {
+display: inherit !important;
+}
+.animate-hide.animated {
+display: none !important;
+}
+
+.animate-hide-visibility {
+opacity: 1 !important;
+}
+.animate-hide-visibility.animated {
+opacity: 0 !important;
+}
+
+.detsonimg {
+margin: 0;
+padding: 0;
+background: linear-gradient(black, white);
+background-position: center center;
+background-size: contain;
+width: device-width;
+height: device-height;
+}
+
+.detson {
+.detson ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+.li:last-child {
+  border: none;
+}
+.li a {
+  text-decoration: none;
+  color: #000;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+  display: block;
+  width: 200px;
+}
+.li a:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+}
+}
+
