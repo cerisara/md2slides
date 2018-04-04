@@ -111,34 +111,28 @@ with codecs.open("slides.html","a","utf-8") as g:
       g.write('    <h'+lev+'>'+getText(line[9:].strip())+'</h'+lev+'>\n')
       g.write('    </div>\n')
     elif line.startswith("######"):
-      lev=line[7]
       g.write('    <div class="aligncenter">\n')
-      g.write('    <h6>'+getText(line[9:].strip())+'</h6>\n')
+      g.write('    <h6>'+getText(line[7:].strip())+'</h6>\n')
       g.write('    </div>\n')
     elif line.startswith("#####"):
-      lev=line[6]
       g.write('    <div class="aligncenter">\n')
-      g.write('    <h5>'+getText(line[9:].strip())+'</h5>\n')
+      g.write('    <h5>'+getText(line[6:].strip())+'</h5>\n')
       g.write('    </div>\n')
     elif line.startswith("####"):
-      lev=line[5]
       g.write('    <div class="aligncenter">\n')
-      g.write('    <h4>'+getText(line[9:].strip())+'</h4>\n')
+      g.write('    <h4>'+getText(line[5:].strip())+'</h4>\n')
       g.write('    </div>\n')
     elif line.startswith("###"):
-      lev=line[4]
       g.write('    <div class="aligncenter">\n')
-      g.write('    <h3>'+getText(line[9:].strip())+'</h3>\n')
+      g.write('    <h3>'+getText(line[4:].strip())+'</h3>\n')
       g.write('    </div>\n')
     elif line.startswith("##"):
-      lev=line[3]
       g.write('    <div class="aligncenter">\n')
-      g.write('    <h2>'+getText(line[9:].strip())+'</h2>\n')
+      g.write('    <h2>'+getText(line[3:].strip())+'</h2>\n')
       g.write('    </div>\n')
     elif line.startswith("#"):
-      lev=line[2]
       g.write('    <div class="aligncenter">\n')
-      g.write('    <h1>'+getText(line[9:].strip())+'</h1>\n')
+      g.write('    <h1>'+getText(line[2:].strip())+'</h1>\n')
       g.write('    </div>\n')
 
     # slide separator
@@ -161,7 +155,7 @@ with codecs.open("slides.html","a","utf-8") as g:
         txti=3
         pref=' style="text-indent:'+line[1]+'cm"'
       g.write('<li'+pref+'>'+getText(line[txti:].strip())+'</li>\n')
-    elif line.startswith('..QUOTE'):
+    elif line.startswith('..QUOTE') or line.startswith('```'):
       if not inquote: g.write('<pre>')
       else: g.write('</pre>')
       inquote=not inquote
@@ -177,6 +171,11 @@ with codecs.open("slides.html","a","utf-8") as g:
       g.write('</div>')
  
     # the Markdown way for images ![](img.jpg) is not enough: we require an additional mandatory parameter: the height %
+    elif line.startswith('![]('):
+      # assume it's an image
+      i=line.find(')')
+      im=line[4:i].strip()
+      g.write('<div class="aligncenter"><img src="'+im+'" style="height:50vh"></div><br>\n')
     elif line.startswith('..IMG'):
       h=line[5:7]
       im=line[8:].strip()
