@@ -9,7 +9,7 @@ def endslide(g):
   g.write('</section>\n')
 def getText_(s,http):
   i=s.find(http)
-  if i>0:
+  if i>=0:
     part1=s[0:i]
     j=s.find(' ',i)
     url=s[i:j]
