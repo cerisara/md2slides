@@ -2,11 +2,29 @@ import codecs
 import os
 
 def newslide(g):
+  global ns
   g.write('<section>\n')
   g.write('  <div class="wrap">\n')
+  ns+=1
 def endslide(g):
   g.write('  </div>\n')
   g.write('</section>\n')
+def strong(s):
+  i=0
+  ss=""
+  while True:
+    j=s.find('*',i)
+    if j<0: break
+    if j>0 and s[j-1]=='\\':
+        ss+=s[i:j-1]+'*'
+        i=j+1
+    else:
+        k=s.find('*',j+1)
+        if k<0: break
+        ss+=s[i:j]+"<strong>"+s[j+1:k]+"</strong>"
+        i=k+1
+  ss+=s[i:]
+  return ss
 def getText_(s,http):
   i=s.find(http)
   if i>=0:
@@ -19,6 +37,7 @@ def getText_(s,http):
 def getText(s):
   s=getText_(s,'http://')
   s=getText_(s,'https://')
+  s=strong(s)
   return s
 
 def skel0():
@@ -101,6 +120,7 @@ with codecs.open("src.md","r","utf-8") as f: src=f.readlines()
 inul=False
 incol=False
 inquote=False
+ns=0
 with codecs.open("slides.html","a","utf-8") as g:
   newslide(g)  
   for line in src:
