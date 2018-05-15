@@ -106,7 +106,7 @@ def skel1():
         '<script src="https://rawgithub.com/webslides/WebSlides/master/static/js/webslides.js"></script>',
         '<script src="webslides-animation.js"></script>',
         '<script>',
-        '  window.ws = new WebSlides();',
+        '  window.ws = new WebSlides({showIndex:false});',
         '  new WebSlidesAnimation(window.ws);',
         '</script>',
         '<script defer src="svg-icons.js"></script>',
