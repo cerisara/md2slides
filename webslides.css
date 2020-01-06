@@ -785,7 +785,7 @@ Auto-fill & Equal height === */
 ============================== */
 html,
 body {
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1;
   text-rendering: optimizeLegibility; }
 
@@ -794,7 +794,7 @@ body,
 input,
 select,
 textarea {
-  font-family: arial, 'Roboto', 'San Francisco', helvetica, arial, sans-serif;
+  font-family: 'Roboto', 'San Francisco', helvetica, arial, sans-serif;
   font-size: 62.5%; }
 
 body,
@@ -1325,7 +1325,7 @@ header[role='banner'] {
 .logo {
   text-transform: lowercase; }
   .logo a {
-    background: url("../images/logos/logo.svg") no-repeat 0 0;
+    background: url("images/logos/logo.svg") no-repeat 0 0;
     background-size: 4.8rem;
     float: left;
     height: 4.8rem;
@@ -1652,7 +1652,7 @@ a#previous {
   #navigation {
     -webkit-animation: fadeIn 6s;
             animation: fadeIn 6s;
-    background: url("../images/swipe.svg") no-repeat center top;
+    background: url("images/swipe.svg") no-repeat center top;
     background-size: 4.8rem; }
   #navigation a,
   #counter {

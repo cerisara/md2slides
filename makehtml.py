@@ -40,81 +40,132 @@ def getText(s):
   s=strong(s)
   return s
 
-def skel0():
-    entete = ('<!doctype html>',
-        '<html lang="en" prefix="og: http://ogp.me/ns#">',
-        '  <head>',
-        '    <meta charset="utf-8">',
-        '    <meta name="viewport" content="width=device-width, initial-scale=1">',
-        '',
-        '    <!-- SEO -->',
-        '    <title>Presentation</title>',
-        '    <meta name="description" content="Presentation">',
-        '',
-        '    <!-- URL CANONICAL -->',
-        '    <!-- <link rel="canonical" href="http://your-url.com/permalink"> -->',
-        '',
-        '    <!-- CSS Base -->',
-        '    <link rel="stylesheet" type="text/css" media="all" href="webslides.css">',
-        '    <link rel="stylesheet" type="text/css" media="all" href="svg-icons.css">',
-        '    <link rel="stylesheet" type="text/css" media="all" href="custom.css">',
-        '',
-        '    <!-- SOCIAL CARDS (ADD YOUR INFO) -->',
-        '',
-        '    <!-- FACEBOOK -->',
-        '    <meta property="og:url" content="http://your-url.com/permalink"> <!-- EDIT -->',
-        '    <meta property="og:type" content="article">',
-        '    <meta property="og:title" content="Make a Keynote presentation using HTML"> <!-- EDIT -->',
-        '    <meta property="og:description" content="WebSlides is the easiest way to make HTML presentations. 120+ free slides ready to use."> <!-- EDIT -->',
-        '    <meta property="og:updated_time" content="2017-01-04T17:32:14"> <!-- EDIT -->',
-        '',
-        '    <!-- TWITTER -->',
-        '    <meta name="twitter:card" content="summary_large_image">',
-        '    <meta name="twitter:site" content="@webslides"> <!-- EDIT -->',
-        '    <meta name="twitter:creator" content="@jlantunez"> <!-- EDIT -->',
-        '    <meta name="twitter:title" content="Make a Keynote presentation using HTML"> <!-- EDIT -->',
-        '    <meta name="twitter:description" content="WebSlides is the easiest way to make HTML presentations. 120+ free slides ready to use."> <!-- EDIT -->',
-        '',
-        '    <!-- FAVICONS -->',
-        '    <link rel="shortcut icon" sizes="16x16" href="../static/images/favicons/favicon.png">',
-        '    <link rel="shortcut icon" sizes="32x32" href="../static/images/favicons/favicon-32.png">',
-        '    <link rel="apple-touch-icon icon" sizes="76x76" href="../static/images/favicons/favicon-76.png">',
-        '    <link rel="apple-touch-icon icon" sizes="120x120" href="../static/images/favicons/favicon-120.png">',
-        '    <link rel="apple-touch-icon icon" sizes="152x152" href="../static/images/favicons/favicon-152.png">',
-        '    <link rel="apple-touch-icon icon" sizes="180x180" href="../static/images/favicons/favicon-180.png">',
-        '    <link rel="apple-touch-icon icon" sizes="192x192" href="../static/images/favicons/favicon-192.png">',
-        '',
-        '    <!-- Android -->',
-        '    <meta name="mobile-web-app-capable" content="yes">',
-        '    <meta name="theme-color" content="#333333">',
-        '',
-        '    <script type="text/javascript" async',
-        '      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">',
-        '    </script>',
-        '',
-        '  </head>',
-        '  <body>',
-        '',
-        '    <main role="main">',
-        '      <article id="webslides">')
-    with codecs.open("slides.html","w","utf-8") as g:
-        for l in entete: g.write(l+'\n')
+# MAIN
 
-def skel1():
-    pied = ('</article>',
-        '</main>',
-        '<script src="https://rawgithub.com/webslides/WebSlides/master/static/js/webslides.js"></script>',
-        '<script src="webslides-animation.js"></script>',
-        '<script>',
-        '  window.ws = new WebSlides({showIndex:false});',
-        '  new WebSlidesAnimation(window.ws);',
-        '</script>',
-        '<script defer src="svg-icons.js"></script>',
-        '</body>',
-        '</html>')
-    with codecs.open("slides.html","a","utf-8") as g:
-        for l in pied: g.write(l+'\n')
+ftemp = open("template.html","r")
+fout  = open("slides.html","w")
 
+for l in ftemp:
+    if l.find("xtofcontent")>=0: break
+    fout.write(l)
+
+# insert markdown content here
+with codecs.open("src.md","r","utf-8") as f: src=f.readlines()
+inul=False
+incol=False
+inquote=False
+ns=0
+
+newslide(fout)
+for line in src:
+    # for headings, support both standard Markdown and ..TITLE
+    if line.startswith("..TITLE"):
+      lev=line[7]
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h'+lev+'>'+getText(line[9:].strip())+'</h'+lev+'>\n')
+      fout.write('    </div>\n')
+    elif line.startswith("######"):
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h6>'+getText(line[7:].strip())+'</h6>\n')
+      fout.write('    </div>\n')
+    elif line.startswith("#####"):
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h5>'+getText(line[6:].strip())+'</h5>\n')
+      fout.write('    </div>\n')
+    elif line.startswith("####"):
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h4>'+getText(line[5:].strip())+'</h4>\n')
+      fout.write('    </div>\n')
+    elif line.startswith("###"):
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h3>'+getText(line[4:].strip())+'</h3>\n')
+      fout.write('    </div>\n')
+    elif line.startswith("##"):
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h2>'+getText(line[3:].strip())+'</h2>\n')
+      fout.write('    </div>\n')
+    elif line.startswith("#"):
+      fout.write('    <div class="aligncenter">\n')
+      fout.write('    <h1>'+getText(line[2:].strip())+'</h1>\n')
+      fout.write('    </div>\n')
+
+    # slide separator
+    elif line.startswith("---"):
+      endslide(fout)
+      newslide(fout)
+
+    # just an horizontal line
+    elif line.startswith("--"):
+      fout.write('<hr>\n')
+
+    # items list
+    elif line[0]=='-':
+      if not inul:
+        inul=True
+        fout.write('<ul class="description">\n')
+      txti=2
+      pref=""
+      if not line[1]==' ':
+        txti=3
+        pref=' style="text-indent:'+line[1]+'cm"'
+      fout.write('<li'+pref+'>'+getText(line[txti:].strip())+'</li>\n')
+    elif line.startswith('..QUOTE') or line.startswith('```'):
+      if not inquote: fout.write('<pre>')
+      else: fout.write('</pre>')
+      inquote=not inquote
+    elif line.startswith('..INDENT'):
+      idt=line[8]
+      fout.write('<div syle="text-indent: '+idt+'cm">' + line[10:]+'</div>')
+    elif line.startswith('..HIDE'):
+      step=line[6]
+      nsteps=line[8]
+      if step=='1': fout.write('<span data-step-count='+nsteps+'></span>')
+      fout.write('<div class="animate-show-visibility" data-step='+step+'>')
+    elif line.startswith('..ENDHIDE'):
+      fout.write('</div>')
+
+    # the Markdown way for images ![](img.jpg) is not enough: we require an additional mandatory parameter: the height %
+    elif line.startswith('![]('):
+      # assume it's an image
+      i=line.find(')')
+      im=line[4:i].strip()
+      fout.write('<div class="aligncenter"><img src="'+im+'" style="height:50vh"></div><br>\n')
+    elif line.startswith('..IMG'):
+      h=line[5:7]
+      im=line[8:].strip()
+      fout.write('<div class="aligncenter"><img src="'+im+'" style="height:'+h+'vh"></div><br>\n')
+
+    # columns
+    elif line.startswith('..COL'):
+      if not incol:
+        fout.write('<div class="grid">\n')
+        incol=True
+      else:
+        fout.write('</div>\n')
+      fout.write('<div class="column">\n')
+      hd=getText(line[5:].strip())
+      if len(hd)>0: fout.write('<h6>'+hd+'</h6>\n')
+    elif line.startswith('..ENDCOL'):
+      assert incol
+      fout.write('</div></div>\n')
+      incol=False
+
+    # Just standard text
+    else:
+      if inul:
+        inul=False
+        fout.write('</ul>\n')
+      fout.write(getText(line))
+endslide(fout)
+
+# end of HTML file
+for l in ftemp:
+    fout.write(l)
+
+fout.close()
+ftemp.close()
+
+"""
 skel0()
 with codecs.open("src.md","r","utf-8") as f: src=f.readlines()
 inul=False
@@ -225,4 +276,5 @@ with codecs.open("slides.html","a","utf-8") as g:
       
   endslide(g)
 skel1()
+"""
 
